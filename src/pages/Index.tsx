@@ -16,12 +16,42 @@ const NAV_ITEMS: { id: Section; label: string; icon: string }[] = [
 ];
 
 const PLAYERS = [
-  { id: 1, name: "STORM_X", role: "Снайпер", rank: "Легенда", wins: 842, kda: "4.7", img: PLAYER_IMG, online: true, tag: "#1337" },
-  { id: 2, name: "VOID_REAPER", role: "Штурмовик", rank: "Мастер", wins: 671, kda: "3.9", img: PLAYER_IMG, online: false, tag: "#0842" },
-  { id: 3, name: "NOVA_GIRL", role: "Поддержка", rank: "Алмаз", wins: 553, kda: "5.1", img: PLAYER_IMG, online: true, tag: "#2024" },
-  { id: 4, name: "DARK_BLADE", role: "Танк", rank: "Платина", wins: 430, kda: "2.8", img: PLAYER_IMG, online: false, tag: "#7777" },
-  { id: 5, name: "ECLIPSE", role: "Контроль", rank: "Мастер", wins: 712, kda: "4.2", img: PLAYER_IMG, online: true, tag: "#0001" },
-  { id: 6, name: "PHANTOM", role: "Разведчик", rank: "Алмаз", wins: 589, kda: "3.6", img: PLAYER_IMG, online: false, tag: "#9000" },
+  {
+    id: 1, name: "STORM_X", role: "Снайпер", rank: "Легенда", wins: 842, kda: "4.7",
+    img: "https://cdn.poehali.dev/projects/972ca233-0513-4a9b-9c10-76f104e4c5de/files/82a38df4-e4c3-477a-8ef7-4dcb2fee2c12.jpg",
+    online: true, tag: "#1337",
+    desc: "Легендарный снайпер с идеальной точностью. Специализируется на дальних дистанциях, ни один враг не уходит от его прицела. 5 сезонов в Топ-10 мирового рейтинга.",
+  },
+  {
+    id: 2, name: "VOID_REAPER", role: "Штурмовик", rank: "Мастер", wins: 671, kda: "3.9",
+    img: "https://cdn.poehali.dev/projects/972ca233-0513-4a9b-9c10-76f104e4c5de/files/5db1dae4-2ff0-4935-9e24-6a34834bdd94.jpg",
+    online: false, tag: "#0842",
+    desc: "Агрессивный штурмовик первой линии. Врывается в самую гущу боя и создаёт хаос в рядах противника. Победитель 3 региональных чемпионатов.",
+  },
+  {
+    id: 3, name: "NOVA_GIRL", role: "Поддержка", rank: "Алмаз", wins: 553, kda: "5.1",
+    img: "https://cdn.poehali.dev/projects/972ca233-0513-4a9b-9c10-76f104e4c5de/files/3a2d4441-25ec-4c58-85cd-c4d67b961e30.jpg",
+    online: true, tag: "#2024",
+    desc: "Лучший игрок поддержки на платформе. Её уникальный стиль игры — удерживать команду живой в самых безнадёжных ситуациях. KDA 5.1 — абсолютный рекорд.",
+  },
+  {
+    id: 4, name: "DARK_BLADE", role: "Танк", rank: "Платина", wins: 430, kda: "2.8",
+    img: "https://cdn.poehali.dev/projects/972ca233-0513-4a9b-9c10-76f104e4c5de/files/59dc8006-0236-4017-bf33-42261129cb0a.jpg",
+    online: false, tag: "#7777",
+    desc: "Несокрушимый танк, щит команды. Поглощает урон, который убил бы любого другого. Опытный ветеран с 6-летним стажем в профессиональном киберспорте.",
+  },
+  {
+    id: 5, name: "ECLIPSE", role: "Контроль", rank: "Мастер", wins: 712, kda: "4.2",
+    img: "https://cdn.poehali.dev/projects/972ca233-0513-4a9b-9c10-76f104e4c5de/files/38148434-186b-413b-9141-a3528ac7e517.jpg",
+    online: true, tag: "#0001",
+    desc: "Мастер тактики и контроля карты. Читает игру на несколько ходов вперёд и блокирует стратегии противника ещё до их реализации. Аналитический гений.",
+  },
+  {
+    id: 6, name: "PHANTOM", role: "Разведчик", rank: "Алмаз", wins: 589, kda: "3.6",
+    img: "https://cdn.poehali.dev/projects/972ca233-0513-4a9b-9c10-76f104e4c5de/files/5a109040-4fba-4230-ba32-936586101261.jpg",
+    online: false, tag: "#9000",
+    desc: "Неуловимый разведчик, невидимый до последнего момента. Собирает информацию о противнике и наносит удар там, где его не ждут. Специалист по засадам.",
+  },
 ];
 
 const SCHEDULE_EVENTS = [
@@ -275,33 +305,38 @@ export default function Index() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {PLAYERS.map((player, i) => (
-                <div key={player.id} className={`glass rounded-2xl overflow-hidden card-hover animate-slide-up delay-${(i % 4 + 1) * 100}`}>
-                  <div className="relative h-32 overflow-hidden">
-                    <div className="absolute inset-0 gradient-cyan-purple opacity-20" />
-                    <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: `url(${HERO_IMG})` }} />
+                <div key={player.id} className={`glass rounded-2xl overflow-hidden card-hover animate-slide-up delay-${(i % 4 + 1) * 100} flex flex-col`}>
+
+                  {/* Фото игрока */}
+                  <div className="relative h-52 overflow-hidden">
+                    <img src={player.img} alt={player.name} className="w-full h-full object-cover object-top" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--card))] via-[hsl(var(--card))]/20 to-transparent" />
+                    <div className="absolute top-3 left-3">
+                      <span className={`font-display text-xs px-2.5 py-1 rounded-lg glass-strong ${rankColors[player.rank] || "text-foreground"}`}>
+                        {player.rank}
+                      </span>
+                    </div>
                     <div className="absolute top-3 right-3">
-                      <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-body glass ${player.online ? "text-green-400" : "text-muted-foreground"}`}>
+                      <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-body glass-strong ${player.online ? "text-green-400" : "text-muted-foreground"}`}>
                         <div className={`w-1.5 h-1.5 rounded-full ${player.online ? "bg-green-400 animate-pulse" : "bg-muted-foreground"}`} />
                         {player.online ? "Онлайн" : "Оффлайн"}
                       </div>
                     </div>
                   </div>
 
-                  <div className="px-5 pb-5">
-                    <div className="relative -mt-10 mb-3 flex items-end justify-between">
-                      <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-[var(--neon-cyan)] shadow-[0_0_16px_rgba(0,229,255,0.35)]">
-                        <img src={player.img} alt={player.name} className="w-full h-full object-cover" />
-                      </div>
-                      <span className={`font-display text-xs px-2 py-1 rounded-lg glass ${rankColors[player.rank] || "text-foreground"}`}>{player.rank}</span>
+                  {/* Контент */}
+                  <div className="px-5 pb-5 pt-4 flex flex-col flex-1">
+                    <div className="mb-2">
+                      <h3 className="font-display text-xl neon-text-cyan">{player.name}</h3>
+                      <span className="font-body text-xs text-muted-foreground">{player.tag} · {player.role}</span>
                     </div>
 
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="font-display text-lg neon-text-cyan">{player.name}</h3>
-                        <span className="font-body text-xs text-muted-foreground">{player.tag} · {player.role}</span>
-                      </div>
-                    </div>
+                    {/* Описание */}
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 flex-1">
+                      {player.desc}
+                    </p>
 
+                    {/* Статистика */}
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       <div className="glass rounded-xl px-3 py-2">
                         <div className="font-body text-xs text-muted-foreground mb-0.5">Победы</div>
